@@ -24,7 +24,6 @@ import ReactPDF, {
   Line,
   Svg,
 } from '@react-pdf/renderer';
-import { TypeFlags } from 'typescript';
 
 type Education = {
   DateRange: Date[];
