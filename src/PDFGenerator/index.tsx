@@ -280,6 +280,13 @@ function PDFGenerator() {
       marginTop: 20,
       height: 470,
     },
+    workYear: {
+      fontSize: 8,
+      fontFamily: 'NunitoExtraBold',
+      color: 'rgb(83,55,103)',
+      marginLeft: 6,
+      width: 76,
+    },
     workPosition: {
       fontSize: 8,
       fontFamily: 'NunitoExtraBold',
@@ -446,7 +453,7 @@ function PDFGenerator() {
               {workArr.map(w => (
                 <View style={styles.workMargin}>
                   <View style={styles.inlineDateRange}>
-                    <Text style={styles.educationYear}>
+                    <Text style={styles.workYear}>
                       {w.DateRange[0]?.toLocaleString('en-US', {
                         month: 'short',
                       })}{' '}
