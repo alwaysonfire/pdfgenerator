@@ -52,13 +52,6 @@ type CharacterReference = {
   Number: number | string;
 };
 
-type ApplicantInfo = {
-  Phone: number | string;
-  Fullname: string;
-  Email: string;
-  Address: string;
-};
-
 function PDFGenerator() {
   const [characterReference, setCharacterReference] = useState<
     CharacterReference[]
@@ -66,12 +59,6 @@ function PDFGenerator() {
   const [educationArr, setEducationArr] = useState<Education[]>([]);
   const [workArr, setWorkArr] = useState<Work[]>([]);
   const [aboutMe, setAboutMe] = useState<string>('');
-  const [applicantInfo, setApplicantInfo] = useState<ApplicantInfo>({
-    Phone: '',
-    Fullname: '',
-    Email: '',
-    Address: '',
-  });
   const [schoolRelatedWorks, setSchoolRelatedWorks] = useState<SchoolRelated[]>(
     []
   );
@@ -79,6 +66,7 @@ function PDFGenerator() {
   const [imageUrl, setImageUrl] = useState<any[]>([]);
   const [programmingSkills, setProgrammingSkills] = useState<string[]>([]);
   const [submit, setSubmit] = useState(false);
+  const [fullName, setFullname] = useState('');
 
   useEffect(() => {
     if (submit) {
@@ -88,7 +76,7 @@ function PDFGenerator() {
     characterReference,
     educationArr,
     aboutMe,
-    applicantInfo,
+    fullName,
     schoolRelatedWorks,
     images,
     programmingSkills,
@@ -302,13 +290,13 @@ function PDFGenerator() {
       fontSize: 8,
       fontFamily: 'NunitoExtraBold',
       color: 'rgb(83,55,103)',
-      marginLeft: 81,
+      marginLeft: 103,
       marginTop: 4,
       marginBottom: 4,
     },
     workDetails: {
       fontSize: 8,
-      marginLeft: 81,
+      marginLeft: 103,
       marginRight: 5,
       fontFamily: 'NunitoRegular',
     },
@@ -353,9 +341,7 @@ function PDFGenerator() {
               P R E S E N T S:
             </Text>
             <Image style={styles.image} src={imageUrl[0]}></Image>
-            <Text style={styles.fullname}>
-              {applicantInfo.Fullname.toUpperCase()}
-            </Text>
+            <Text style={styles.fullname}>{fullName.toUpperCase()}</Text>
             <Text style={styles.aboutMe}>ABOUT ME</Text>
             <Svg style={{ marginLeft: 30 }} height={'10px'}>
               <Line
@@ -392,22 +378,18 @@ function PDFGenerator() {
               <Text style={styles.view}></Text>
               <Text style={styles.applicantInfo}>Phone</Text>
             </View>
-            <Text style={styles.applicantInformationPhone}>
-              {applicantInfo.Phone}
-            </Text>
+            <Text style={styles.applicantInformationPhone}>09952888978</Text>
             <View style={styles.inline}>
               <Text style={styles.view}></Text>
               <Text style={styles.applicantInfo}>Email</Text>
             </View>
-            <Text style={styles.applicantInformation}>
-              {applicantInfo.Email}
-            </Text>
+            <Text style={styles.applicantInformation}>info@thecodebox.net</Text>
             <View style={styles.inline}>
               <Text style={styles.view}></Text>
               <Text style={styles.applicantInfo}>Address</Text>
             </View>
             <Text style={styles.applicantInformation}>
-              {applicantInfo.Address}
+              Unit 617B Meridian by Avenir, Golam Drive, Mabolo, Cebu City 6000
             </Text>
           </View>
 
@@ -467,8 +449,8 @@ function PDFGenerator() {
                     <Text style={styles.educationYear}>
                       {w.DateRange[0]?.toLocaleString('en-US', {
                         month: 'short',
-                      })}
-                      -
+                      })}{' '}
+                      {w.DateRange[0]?.getFullYear()}-
                       {w.DateRange[1]?.toLocaleString('en-US', {
                         month: 'short',
                       })}{' '}
@@ -706,20 +688,6 @@ function PDFGenerator() {
     }
   };
 
-  const handleApplicantInformation = (e: any, type: string) => {
-    const current = { ...applicantInfo };
-    if (type === 'phone') {
-      current.Phone = e.target.value;
-    } else if (type === 'fullname') {
-      current.Fullname = e.target.value;
-    } else if (type === 'email') {
-      current.Email = e.target.value;
-    } else if (type === 'address') {
-      current.Address = e.target.value;
-    }
-    setApplicantInfo(current);
-  };
-
   const handleCharacterReference = (e: any, index: number, type: string) => {
     const current = [...characterReference];
     if (type === 'number') {
@@ -802,37 +770,11 @@ function PDFGenerator() {
           ></TextField>
           <Grid item sx={{ py: 5 }}>
             <TextField
-              onChange={e => handleApplicantInformation(e, 'fullname')}
-              value={applicantInfo.Fullname}
+              onChange={e => setFullname(e.target.value)}
+              value={fullName}
               label="Full Name"
               variant="filled"
-              sx={{ pr: 5, width: '20%' }}
-              required
-            ></TextField>
-            <TextField
-              onChange={e => handleApplicantInformation(e, 'phone')}
-              value={applicantInfo.Phone}
-              type={'number'}
-              label="Phone"
-              variant="filled"
-              sx={{ pr: 5, width: '20%' }}
-              required
-            ></TextField>
-            <TextField
-              onChange={e => handleApplicantInformation(e, 'email')}
-              value={applicantInfo.Email}
-              type={'email'}
-              label="Email"
-              variant="filled"
-              sx={{ pr: 5, width: '20%' }}
-              required
-            ></TextField>
-            <TextField
-              onChange={e => handleApplicantInformation(e, 'address')}
-              value={applicantInfo.Address}
-              label="Address"
-              variant="filled"
-              sx={{ pr: 5, width: '20%' }}
+              fullWidth
               required
             ></TextField>
           </Grid>
@@ -1144,7 +1086,11 @@ function PDFGenerator() {
           )}
         </form>
         {submit && (
-          <PDFDownloadLink key={'pdfLink'} document={<Doc />} fileName={'Test'}>
+          <PDFDownloadLink
+            key={'pdfLink'}
+            document={<Doc />}
+            fileName={fullName}
+          >
             {({ loading }) =>
               loading ? (
                 <Button variant="contained">Loading PDF</Button>
