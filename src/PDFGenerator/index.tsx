@@ -377,7 +377,9 @@ function PDFGenerator() {
                 <>
                   <Text style={styles.characterName}>{c.Name}</Text>
                   <Text style={styles.characterPosition}>{c.Position}</Text>
-                  <Text style={styles.characterNumber}>T: {c.Number}</Text>
+                  {c.Number && (
+                    <Text style={styles.characterNumber}>T: {c.Number}</Text>
+                  )}
                 </>
               ))}
             </View>
@@ -836,7 +838,6 @@ function PDFGenerator() {
                   }
                   label="Contact Number"
                   variant="filled"
-                  required
                 ></TextField>
                 <ArrDivider />
               </div>
