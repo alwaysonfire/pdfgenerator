@@ -128,8 +128,8 @@ function PDFGenerator() {
     leftBackground: {
       position: 'absolute',
       minWidth: '100%',
-      minHeight: '100%',
-      height: '100%',
+      minHeight: '100vh',
+      height: '100vh',
       width: '100%',
     },
     logo: {
@@ -233,7 +233,6 @@ function PDFGenerator() {
     educationView: {
       marginTop: 20,
       marginLeft: 20,
-      height: 180,
     },
     rightTitle: {
       fontSize: 12,
@@ -278,7 +277,6 @@ function PDFGenerator() {
     workExperienceView: {
       marginLeft: 20,
       marginTop: 20,
-      height: 470,
     },
     workYear: {
       fontSize: 8,
@@ -334,12 +332,14 @@ function PDFGenerator() {
   const Doc = () => (
     <Document>
       <Page style={styles.page} size="A4">
-        <View style={[styles.row, { height: 700 }]}>
+        <View style={styles.row}>
           <View style={styles.left}>
-            <Image
-              style={styles.leftBackground}
-              src={process.env.PUBLIC_URL + '/images/backgroundpdf.png'}
-            ></Image>
+            <View fixed={true}>
+              <Image
+                style={styles.leftBackground}
+                src={process.env.PUBLIC_URL + '/images/backgroundpdf.png'}
+              ></Image>
+            </View>
             <Image
               style={styles.logo}
               src={process.env.PUBLIC_URL + '/images/thecodeboxlogo.png'}
@@ -850,7 +850,6 @@ function PDFGenerator() {
               onClick={() => {
                 addEducationField();
               }}
-              disabled={educationArr.length === 2}
             >
               +
             </Button>
@@ -934,7 +933,6 @@ function PDFGenerator() {
               onClick={() => {
                 addSchoolRelatedWorks();
               }}
-              disabled={schoolRelatedWorks.length === 2}
             >
               +
             </Button>
@@ -977,7 +975,6 @@ function PDFGenerator() {
               onClick={() => {
                 addWorkField();
               }}
-              disabled={workArr.length === 4}
             >
               +
             </Button>
@@ -1032,7 +1029,6 @@ function PDFGenerator() {
                     onClick={() => {
                       addJobDetails(index);
                     }}
-                    disabled={workArr[index].JobDetails.length === 5}
                   >
                     +
                   </Button>
