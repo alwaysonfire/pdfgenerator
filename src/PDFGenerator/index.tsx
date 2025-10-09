@@ -480,7 +480,7 @@ function PDFGenerator() {
               ))}
             </View>
             <View style={styles.programmingSkillsView}>
-              <Text style={styles.rightTitle}>{'PROGRAMMING SKILLS'}</Text>
+              <Text style={styles.rightTitle}>{'RELEVANT SKILLS'}</Text>
               <Svg style={{ marginLeft: 7 }} height={'1px'}>
                 <Line
                   x1="0"
@@ -1077,7 +1077,7 @@ function PDFGenerator() {
                 <TextField
                   {...params}
                   variant="filled"
-                  label="Programming Skills"
+                  label="Relevant Skills"
                   placeholder="Skills"
                 />
               )}
